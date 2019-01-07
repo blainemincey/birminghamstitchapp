@@ -1,10 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import './styles/index.css';
+import App from './components/App';
+import * as serviceWorker from './utils/serviceWorker';
+import WebFontLoader from 'webfontloader';
+import { BrowserRouter as Router } from "react-router-dom";
 
-ReactDOM.render(<App />, document.getElementById('root'));
+WebFontLoader.load({
+    google: {
+        families: ['Roboto:300,400,500,700', 'Material Icons'],
+    },
+});
+
+ReactDOM.render(<Router><App /></Router>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
