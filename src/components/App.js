@@ -7,6 +7,7 @@ import About from './About';
 import Products from './Products';
 import ProductSearch from './ProductSearch.js';
 import AddProduct from './AddProduct';
+import OrderProducts from './OrderProducts';
 import img from '../styles/mongoDBStitch.jpg';
 
 // Import Stitch from the browser SDK
@@ -34,7 +35,11 @@ const navItems = [{
     label: 'Add Product',
     icon: 'add_box',
     to: '/addProduct'
-    },{
+    }, {
+    label: 'Order Products',
+    icon: 'autorenew',
+    to: '/orderProducts'
+    }, {
     label: 'About',
     icon: 'info',
     to: '/about'
@@ -56,6 +61,7 @@ class App extends Component {
                             <Route path="/products" location={location} component={Products}/>
                             <Route path="/productSearch" location={location} component={ProductSearch}/>
                             <Route path="/addProduct" location={location} component={AddProduct}/>
+                            <Route path="/orderProducts" location={location} component={OrderProducts}/>
                             <Route path="/about" location={location} component={About} />
                         </Switch>
 

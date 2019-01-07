@@ -69,8 +69,10 @@ export default class ProductSearch extends Component {
         return (
             <div className="md-grid">
                 <pre className="md-cell md-cell--12">
-                    This page is built using <a target={"_blank"} href={"https://docs.mongodb.com/stitch/functions/"}>MongoDB Stitch Functions.</a>  Using the Stitch client {"\n"}
+                    <h4 className="md-cell md-cell--12">
+                        <b>Note: </b>This page is built using <a target={"_blank"} href={"https://docs.mongodb.com/stitch/functions/"}>MongoDB Stitch Functions.</a>  Using the Stitch client {"\n"}
                     it is possible to call functions defined within MongoDB Stitch.
+                    </h4>
                 </pre>
                 <h2 className="md-cell md-cell--12">Product Search Page</h2>
                 <form onSubmit={this.handleSubmit}

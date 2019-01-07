@@ -6,14 +6,13 @@ import MaterialTable from 'material-table';
 import {stitchClient} from "./App";
 import {RemoteMongoClient, UserPasswordCredential} from 'mongodb-stitch-browser-sdk';
 
-export default class Products extends Component {
+export default class OrderProducts extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            data: [],
-            username: ''
+            data: []
         }
 
         this.onClick = this.onClick.bind(this);
@@ -21,13 +20,11 @@ export default class Products extends Component {
     }
 
     // function driver via Stitch Query Anywhere.
-    listProductsByUser(username) {
-
-        this.setState({username:username});
+    listProductsToOrder() {
 
         // Start of Stitch use
-        // Strictly for example.  Each user would most likely have a different password :)
-        console.log("List Products. User selected: " + this.state.username);
+        // Strictly for example.
+        let username = 'Joe';
         let pass = 'myPassword123';
         let credential = new UserPasswordCredential(username, pass);
 
@@ -40,15 +37,13 @@ export default class Products extends Component {
                 "mongodb-atlas"
             );
 
-            // get a reference to the inventory collection
-            let inventoryCollection = mongodb.db("myInventoryDatabase").collection("inventory");
+            // get a reference to the order new inventory collection
+            let orderNewInventoryCollection = mongodb.db("myInventoryDatabase").collection("orderNewInventory");
 
             // query the collection
-            return inventoryCollection.find({}, {
-                limit: 30,
-                sort: {"price": 1}
+            return orderNewInventoryCollection.find({}, {
             }).asArray();
-        // End of Stitch use
+            // End of Stitch use
 
         }).then(results => {
 
@@ -56,17 +51,18 @@ export default class Products extends Component {
                 console.log("component unmounted");
                 return;
             }
+
             this.setState({data: results});
 
         }).catch(e => {
-            console.log("Error with listproducts by user: " + e);
+            console.log("Error with list products to order: " + e);
         })
     }
 
     componentDidMount() {
         if(this.state.data.length === 0) {
             this.setState({
-                data : this.listProductsByUser('Joe')
+                data : this.listProductsToOrder()
             })
         }
     }
@@ -75,9 +71,9 @@ export default class Products extends Component {
         this.isUnmounted = true;
     }
 
-    onClick(username) {
+    onClick() {
         this.setState({
-            data: this.listProductsByUser(username)
+            data: this.listProductsToOrder()
         })
     }
 
@@ -94,23 +90,21 @@ export default class Products extends Component {
                 <pre className="md-cell md-cell--12">
                     <h4 className="md-cell md-cell--12">
                     <b>Note: </b>This page is built using the <a target={"_blank"} href={"https://docs.mongodb.com/stitch/getting-started/configure-rules-based-access-to-mongodb/"}>Query Anywhere</a> functionality of Stitch. {"\n"}
-                    Additionally, results are filtered based on the selected User.  {"\n"}
-                    This is controlled via <a target={"_blank"} href={"https://docs.mongodb.com/stitch/mongodb/mongodb-rules/"}>Rules</a> in MongoDB Stitch.
+                        For this example, if a new product is added with 0 available or if a product is updated using MongoDB Compass to having {"\n"}
+                        0 available, a <a target={"_blank"} href={"https://docs.mongodb.com/stitch/triggers/"}>Stitch Trigger</a> is fired to insert a document into a new collection.
                     </h4>
                 </pre>
-                <h2 className="md-cell md-cell--12">Product Listing Page</h2>
-                <Button className="md-cell--left" raised primary onClick={() => this.onClick('Joe')}>Products for Joe</Button>
-                <Button className="md-cell--left" raised primary onClick={() => this.onClick('Sue')}>Products for Sue</Button>
-                <h4 className="md-cell md-cell--12">Displaying data for user: {this.state.username}</h4>
+                <h2 className="md-cell md-cell--12">Products To Order</h2>
+                <Button className="md-cell md-cell--2" raised primary onClick={() => this.onClick()}>Refresh</Button>
+                <div style={{width:'100%'}}>
                 <MaterialTable
-                        columns={[{title: 'Name', field: 'productName'},
-                            {title: 'Color', field: 'color'},
-                            {title: 'Department', field: 'department'},
-                            {title: 'SKU', field: 'sku'},
-                            {title: 'Price', field: 'price'},
-                            {title: 'Available', field: 'available'}]}
-                            data={mtData}
-                            title={"Products"}/>
+                    columns={[{title: 'Product ID', field: 'productId'},
+                        {title: 'Name', field: 'productName'},
+                        {title: 'Currently Available', field: 'currentAvailable'},
+                        {title: 'Date', field: 'date'}]}
+                    data={mtData}
+                    title={"Results"}/>
+                </div>
 
             </div>
         );

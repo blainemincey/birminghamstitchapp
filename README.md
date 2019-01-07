@@ -1,8 +1,14 @@
+## MongoDB Event - Birmingham
+This project is used as an example to illustrate the power of MongoDB Atlas/MongoDB Stitch.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm install`
+Install the application with the proper components.
 
 ### `npm start`
 

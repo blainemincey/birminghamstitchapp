@@ -12,7 +12,8 @@ export default class AddProduct extends Component {
         super(props)
 
         this.state = {
-            toasts: []
+            toasts: [],
+            savedProductName: ''
         };
 
         this.productNameField = React.createRef();
@@ -43,6 +44,11 @@ export default class AddProduct extends Component {
                     });
 
                     this.setState({toasts});
+
+                    // Saved Product Name
+                    this.setState({
+                        savedProductName: json
+                    });
                 }
             })
             .catch(function(ex) {
@@ -97,6 +103,9 @@ export default class AddProduct extends Component {
 
     handleReset = () => {
         console.log("reset");
+        this.setState({
+            savedProductName: ''
+        })
     };
 
     render() {
@@ -107,12 +116,15 @@ export default class AddProduct extends Component {
 
             <div className="md-grid">
                 <pre className="md-cell md-cell--12">
-                    This page is using the <a target={"_blank"} href={"https://docs.mongodb.com/stitch/services/create-a-service-webhook/index.html"}>Webhook</a> feature of MongoDB Stitch.  This enables the ability to {"\n"}
+                    <h4 className="md-cell md-cell--12">
+                    <b>Note: </b>This page is using the <a target={"_blank"} href={"https://docs.mongodb.com/stitch/services/create-a-service-webhook/index.html"}>Webhook</a> feature of MongoDB Stitch.  This enables the ability to {"\n"}
                     define a REST-enabled endpoint that can accept HTTP GET and POST requests.  This page {"\n"}
                     is posting the contents of a new product definition to an endpoint that is backed by an {"\n"}
                     associated function which handles the insert.
+                    </h4>
                 </pre>
                 <h2 className="md-cell md-cell--12">Add Product</h2>
+                <h4 className="md-cell md-cell--12">{this.state.savedProductName}</h4>
                 <form onSubmit={this.handleSubmit}
                       onReset={this.handleReset}>
                     <TextField
@@ -164,7 +176,6 @@ export default class AddProduct extends Component {
                         type="number"
                         defaultValue={10}
                         step={10}
-                        min={10}
                         className="md-cell md-cell--12"
                         required
                         ref={this.numberAvailableField}
