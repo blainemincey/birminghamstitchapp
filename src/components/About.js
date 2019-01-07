@@ -25,7 +25,7 @@ export default class About extends Component {
                     <a target={"_blank"} href={"https://react-md.mlaursen.com/"}>react-md (Material Design for React)</a>{"\n"}
                     <a target={"_blank"} href={"https://react-md.mlaursen.com/"}>material-table (DataTable based on the material-ui table component)</a>{"\n\n"}
                         <b>Source Code</b>{"\n"}
-                    <a target={"_blank"} href={"https://github.com/blainemincey/birminghamstitchapp"}>GitHub Source Code for React Frontend</a>{"\n"}
+                    <a target={"_blank"} href={"https://github.com/blainemincey/birminghamstitchappfrontend.git"}>GitHub Source Code for React Frontend</a>{"\n"}
                     <a target={"_blank"} href={"https://github.com/blainemincey/birminghamStitchApplication"}>GitHub Source Code for MongoDB Stitch Application</a>{"\n\n"}
                         <b>Need to generate data?</b>{"\n"}
                     <a target={"_blank"} href={"https://github.com/blainemincey/commercefakedata"}>Fake Data Generator</a>{"\n\n"}
